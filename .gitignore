@@ -1,0 +1,5 @@
+# Temp screenshots / working files
+*.png
+*.jpeg
+*.jpg
+.playwright-mcp/
