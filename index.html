@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AltaiJet — Приключения на джетботе по реке Катунь</title>
+<meta name="description" content="Незабываемое приключение на джетботе через ущелья и кристальные воды дикого Алтая. Река Катунь, Республика Алтай, Россия." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --green: #12d65b;
+    --green-dark: #0fbd50;
+    --green-mint: #d9f7e4;
+    --ink: #0e0e0e;
+    --ink-soft: #2a2a2a;
+    --muted: #6b6b6b;
+    --line: #e6e5e2;
+    --bg: #ffffff;
+    --bg-alt: #f3f2f0;
+    --dark: #141414;
+    --dark-2: #1b1b1b;
+    --tg: #229ed9;
+
+    --font-body: "PT Sans", "Segoe UI", Roboto, system-ui, sans-serif;
+    --font-display: "Oswald", "PT Sans Narrow", "Arial Narrow", system-ui, sans-serif;
+
+    --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.08rem);
+    --text-label: 0.78rem;
+    --display-hero: clamp(3.2rem, 1.4rem + 8.5vw, 8.4rem);
+    --display-xl: clamp(2.4rem, 1.3rem + 4.6vw, 5rem);
+    --display-lg: clamp(1.9rem, 1.25rem + 2.8vw, 3.4rem);
+
+    --space-section: clamp(4.5rem, 3rem + 6vw, 9rem);
+    --radius: 18px;
+    --radius-pill: 999px;
+    --shadow-card: 0 20px 50px -30px rgba(0, 0, 0, 0.35);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 320ms;
+    --maxw: 1240px;
+  }
+
+  /* ============ RESET ============ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  ul { list-style: none; }
+
+  /* ============ HELPERS ============ */
+  .wrap { width: min(100% - 2.5rem, var(--maxw)); margin-inline: auto; }
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+  .accent { color: var(--green); }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-weight: 700;
+    font-size: var(--text-label);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 38px;
+    height: 2px;
+    background: var(--green);
+  }
+  .eyebrow.center { justify-content: center; }
+  .lead { color: var(--muted); max-width: 48ch; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 1.9rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    will-change: transform;
+  }
+  .btn:hover { transform: translateY(-3px); }
+  .btn:active { transform: translateY(0); }
+  .btn--green { background: var(--green); color: #062611; box-shadow: 0 14px 30px -14px var(--green); }
+  .btn--green:hover { background: var(--green-dark); }
+  .btn--tg { background: var(--tg); color: #fff; box-shadow: 0 14px 30px -14px var(--tg); }
+  .btn--dark { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(6px); }
+  .btn--dark:hover { background: rgba(255, 255, 255, 0.16); }
+  .btn .ic { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: rgba(0, 0, 0, 0.12); }
+  .btn--tg .ic, .btn--dark .ic { background: rgba(255, 255, 255, 0.18); }
+
+  .ico { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ============ REVEAL ============ */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    padding: 1.1rem 0;
+    transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), padding var(--dur) var(--ease);
+  }
+  .site-header.scrolled {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
+    padding: 0.7rem 0;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .brand { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; transition: color var(--dur) var(--ease); }
+  .brand .accent { color: var(--green); }
+  .scrolled .brand { color: var(--ink); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.01em;
+    transition: color var(--dur) var(--ease);
+    position: relative;
+  }
+  .scrolled .nav-links a { color: var(--ink-soft); }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0;
+    background: var(--green); transition: width var(--dur) var(--ease);
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta { padding: 0.75rem 1.6rem; }
+  .nav-toggle { display: none; width: 44px; height: 44px; color: #fff; }
+  .scrolled .nav-toggle { color: var(--ink); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0 3rem;
+    color: #fff;
+    background: #0a0f0c;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(8, 12, 10, 0.55) 0%, rgba(8, 12, 10, 0.25) 35%, rgba(8, 12, 10, 0.85) 100%),
+      url("https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+    z-index: 0;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .hero-eyebrow { color: var(--green); margin-bottom: 1.6rem; }
+  .hero h1 { font-size: var(--display-hero); margin-bottom: 1.8rem; }
+  .hero h1 span { display: block; }
+  .hero p { max-width: 40ch; color: rgba(255, 255, 255, 0.86); margin-bottom: 2.4rem; font-size: 1.15rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.2rem; }
+  .hero-facts { display: flex; flex-wrap: wrap; gap: 1.6rem 2.4rem; }
+  .hero-facts li { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 0.95rem; }
+  .hero-facts .ico { color: var(--green); }
+  .scroll-dot {
+    position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
+    width: 2px; height: 46px; background: linear-gradient(var(--green), transparent);
+    z-index: 1;
+  }
+  .scroll-dot::after {
+    content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+    animation: dot 2s var(--ease) infinite;
+  }
+  @keyframes dot { 0% { top: 0; opacity: 1; } 70% { opacity: 1; } 100% { top: 40px; opacity: 0; } }
+
+  /* ============ SECTION BASE ============ */
+  section { padding-block: var(--space-section); }
+  .section-alt { background: var(--bg-alt); }
+  .section-head { max-width: 680px; }
+  .section-head .eyebrow { margin-bottom: 1.4rem; }
+  .section-head h2 { font-size: var(--display-lg); }
+  .section-head.center { margin-inline: auto; text-align: center; }
+
+  /* ============ ON THE WATER ============ */
+  .power { text-align: center; }
+  .power h2 { font-size: var(--display-xl); margin: 1.4rem auto 1.2rem; max-width: 18ch; }
+  .power .lead { margin: 0 auto 3rem; text-align: center; max-width: 60ch; }
+  .video {
+    position: relative; aspect-ratio: 16 / 8; border-radius: var(--radius); overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.35)),
+      url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=80") center/cover;
+  }
+  .play {
+    position: absolute; inset: 0; margin: auto; width: 84px; height: 84px; border-radius: 50%;
+    background: var(--green); display: grid; place-items: center; color: #062611;
+    box-shadow: 0 0 0 0 rgba(18, 214, 91, 0.55); animation: pulse 2.4s infinite;
+  }
+  .play svg { width: 26px; height: 26px; fill: currentColor; margin-left: 4px; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(18,214,91,0.5); } 70% { box-shadow: 0 0 0 26px rgba(18,214,91,0); } 100% { box-shadow: 0 0 0 0 rgba(18,214,91,0); } }
+
+  /* ============ WHY US ============ */
+  .cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; margin-top: 3.4rem; }
+  .feature-card {
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 2rem 1.7rem; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .section-alt .feature-card { background: #fff; }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-card); border-color: transparent; }
+  .feature-icon {
+    width: 52px; height: 52px; border-radius: 14px; background: var(--green-mint);
+    color: var(--green-dark); display: grid; place-items: center; margin-bottom: 1.6rem;
+  }
+  .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .feature-card p { color: var(--muted); font-size: 0.96rem; }
+
+  /* ============ DESTINATION ============ */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4.5rem); align-items: center; }
+  .destination h2 { font-size: var(--display-lg); margin: 1.3rem 0 1.6rem; }
+  .destination p + p { margin-top: 1rem; }
+  .destination .lead { max-width: none; }
+  .dest-media { position: relative; }
+  .dest-media img { width: 100%; height: 520px; object-fit: cover; border-radius: var(--radius); }
+  .glass-row { position: absolute; left: 1rem; right: 1rem; top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .glass {
+    display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.9rem; border-radius: 14px;
+    background: rgba(255, 255, 255, 0.16); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.28); color: #fff;
+  }
+  .glass img { width: 46px; height: 40px; border-radius: 8px; object-fit: cover; }
+  .glass b { display: block; font-size: 0.9rem; }
+  .glass span { font-size: 0.76rem; opacity: 0.85; }
+  .stats { display: flex; flex-wrap: wrap; gap: 2.6rem; margin-top: 2.6rem; }
+  .stat b { font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; color: var(--green); display: block; line-height: 1; }
+  .stat span { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+  /* ============ THE MACHINE ============ */
+  .machine .section-head { margin-bottom: 2.6rem; }
+  .machine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+  .machine-media img { width: 100%; height: 460px; object-fit: cover; border-radius: var(--radius); }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 0.7rem; }
+  .thumbs img { height: 90px; object-fit: cover; border-radius: 10px; }
+  .spec { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.4rem 1.6rem; }
+  .spec-row { display: flex; justify-content: space-between; padding: 0.95rem 0; border-bottom: 1px solid var(--line); }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row span { color: var(--muted); }
+  .spec-row b { font-weight: 700; }
+  .mini-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1.4rem; }
+  .mini {
+    display: flex; align-items: center; gap: 0.85rem; padding: 1rem 1.1rem;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+  }
+  .mini .feature-icon { width: 40px; height: 40px; border-radius: 11px; margin: 0; }
+  .mini b { display: block; font-size: 0.98rem; }
+  .mini span { font-size: 0.82rem; color: var(--muted); }
+
+  /* ============ EXPERIENCE ============ */
+  .cards-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-top: 3.4rem; }
+  .xp {
+    text-align: center; padding: 2rem 1rem; border: 1px solid var(--line); border-radius: var(--radius);
+    background: #fff; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .xp:hover { transform: translateY(-6px); box-shadow: var(--shadow-card); }
+  .xp .feature-icon { margin: 0 auto 1.1rem; }
+  .xp h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .xp span { font-size: 0.82rem; color: var(--muted); }
+
+  /* ============ GALLERY ============ */
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 1rem; margin-top: 3rem; }
+  .gallery-grid figure { overflow: hidden; border-radius: var(--radius); }
+  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .gallery-grid figure:hover img { transform: scale(1.07); }
+  .g-wide { grid-column: span 2; }
+  .g-tall { grid-row: span 2; }
+
+  /* ============ TIMELINE ============ */
+  .timeline { position: relative; margin-top: 3.4rem; }
+  .timeline::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--line); transform: translateX(-50%); }
+  .step { display: grid; grid-template-columns: 1fr 80px 1fr; align-items: center; margin-bottom: 1.4rem; }
+  .step .node {
+    grid-column: 2; justify-self: center; width: 52px; height: 52px; border-radius: 50%;
+    display: grid; place-items: center; background: #fff; border: 2px solid var(--green);
+    color: var(--green-dark); font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; z-index: 1;
+  }
+  .step .step-card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.6rem 1.8rem;
+    box-shadow: var(--shadow-card);
+  }
+  .step .step-card h3 { display: flex; align-items: center; gap: 0.6rem; font-size: 1.15rem; margin-bottom: 0.5rem; }
+  .step .step-card .feature-icon { width: 30px; height: 30px; border-radius: 9px; margin: 0; }
+  .step .step-card p { color: var(--muted); font-size: 0.95rem; }
+  .step--left .step-card { grid-column: 1; }
+  .step--right .step-card { grid-column: 3; }
+
+  /* ============ STORY ============ */
+  .story .split { align-items: stretch; }
+  .story-media img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; border-radius: var(--radius); }
+  .story-body { align-self: center; }
+  .story-body h2 { font-size: var(--display-lg); margin: 1.3rem 0 1.5rem; }
+  .story-body p + p { margin-top: 1rem; }
+  .story-body .lead { max-width: none; }
+
+  /* ============ FAQ ============ */
+  .faq { max-width: 860px; margin: 3rem auto 0; display: grid; gap: 1rem; }
+  .faq-item { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .faq-q {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.25rem 1.6rem; font-weight: 700; font-size: 1.05rem; text-align: left;
+  }
+  .faq-q .chev { transition: transform var(--dur) var(--ease); color: var(--muted); flex: none; }
+  .faq-item.open .chev { transform: rotate(180deg); color: var(--green); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur) var(--ease); }
+  .faq-a p { padding: 0 1.6rem 1.4rem; color: var(--muted); }
+
+  /* ============ FINAL CTA ============ */
+  .final {
+    position: relative; text-align: center; color: #fff; overflow: hidden;
+    padding-block: clamp(5rem, 4rem + 6vw, 9rem);
+  }
+  .final::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      linear-gradient(180deg, rgba(10,14,11,0.78), rgba(10,14,11,0.88)),
+      url("https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=2000&q=80") center/cover fixed;
+  }
+  .final .wrap { position: relative; z-index: 1; }
+  .final .eyebrow { color: var(--green); margin-bottom: 1.4rem; }
+  .final .eyebrow::after { content: ""; width: 38px; height: 2px; background: var(--green); }
+  .final h2 { font-size: var(--display-xl); max-width: 20ch; margin: 0 auto 1.4rem; }
+  .final p { max-width: 52ch; margin: 0 auto 2.4rem; color: rgba(255,255,255,0.85); font-size: 1.12rem; }
+  .final-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 1.6rem; }
+  .final small { color: rgba(255,255,255,0.6); letter-spacing: 0.01em; }
+
+  /* ============ FOOTER ============ */
+  .site-footer { background: var(--dark); color: rgba(255,255,255,0.7); padding-block: 3rem; }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-brand .brand { color: #fff; }
+  .footer-brand p { font-size: 0.9rem; margin-top: 0.4rem; }
+  .socials { display: flex; gap: 0.8rem; }
+  .socials a {
+    width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--dark-2); border: 1px solid rgba(255,255,255,0.1); color: #fff;
+    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .socials a:hover { background: var(--green); color: #062611; transform: translateY(-3px); }
+  .copyright { font-size: 0.86rem; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 960px) {
+    .cards-4 { grid-template-columns: repeat(2, 1fr); }
+    .cards-6 { grid-template-columns: repeat(3, 1fr); }
+    .split, .machine-grid { grid-template-columns: 1fr; }
+    .dest-media img { height: 400px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+    .g-wide { grid-column: span 2; }
+    .g-tall { grid-row: span 1; }
+    .timeline::before { left: 26px; }
+    .step { grid-template-columns: 52px 1fr; gap: 1rem; }
+    .step .node { grid-column: 1; }
+    .step--left .step-card, .step--right .step-card { grid-column: 2; }
+  }
+  @media (max-width: 640px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-toggle { display: grid; place-items: center; }
+    .nav.open .nav-links {
+      display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); padding: 1.4rem 1.25rem;
+      gap: 1.2rem; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.3);
+    }
+    .nav.open .nav-links a { color: var(--ink); }
+    .cards-4, .cards-6 { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+    .g-wide { grid-column: span 1; }
+    .mini-cards { grid-template-columns: 1fr; }
+    .hero-actions .btn, .final-actions .btn { flex: 1 1 auto; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <div class="wrap">
+    <nav class="nav" id="nav" aria-label="Основная навигация">
+      <a href="#top" class="brand">ALTAI<span class="accent">JET</span></a>
+      <ul class="nav-links">
+        <li><a href="#experience">Впечатления</a></li>
+        <li><a href="#about">Об Алтае</a></li>
+        <li><a href="#boat">Катер</a></li>
+        <li><a href="#gallery">Галерея</a></li>
+        <li><a href="#faq">Вопросы</a></li>
+      </ul>
+      <a href="#book" class="btn btn--green nav-cta">Забронировать</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow hero-eyebrow reveal">Река Катунь, Алтай</p>
+      <h1 class="display reveal">
+        <span>Покори</span>
+        <span><span class="accent">дикую</span> Катунь</span>
+      </h1>
+      <p class="reveal">Незабываемое приключение на джетботе через захватывающие ущелья и кристальные воды дикого Алтая. Дарим эмоции с 2017 года.</p>
+      <div class="hero-actions reveal">
+        <a href="#book" class="btn btn--green">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M20 12a8 8 0 1 1-3.4-6.5L20 4l-.8 3.2A8 8 0 0 1 20 12Z"/><path d="M8.5 9.5c.5 3 3 5.5 6 6l1.5-1.5-2-1-1 .8c-1.4-.6-2.6-1.8-3.2-3.2l.8-1-1-2Z"/></svg></span>
+          Написать в WhatsApp
+        </a>
+        <a href="#book" class="btn btn--dark">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m21 4-9 16-2-7-7-2 18-7Z"/></svg></span>
+          Написать в Telegram
+        </a>
+      </div>
+      <ul class="hero-facts reveal">
+        <li><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Алтай, Россия</li>
+        <li><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 6a3 3 0 0 1 0 6M21 20c0-2-1.5-3.5-3.5-4.2"/></svg>До 14 пассажиров</li>
+        <li><svg class="ico" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/></svg>Опытный капитан</li>
+        <li><svg class="ico" viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg>Полная безопасность</li>
+      </ul>
+    </div>
+    <span class="scroll-dot"></span>
+  </section>
+
+  <!-- ============ ON THE WATER ============ -->
+  <section class="power section-alt">
+    <div class="wrap">
+      <p class="eyebrow center reveal">На воде</p>
+      <h2 class="display reveal">Почувствуй мощь джетбота</h2>
+      <p class="lead reveal">Чистый адреналин на скорости 80 км/ч среди отвесных стен каньона, брызг порогов и горных вершин, врезающихся в небо. Это Алтай в самом первозданном виде.</p>
+      <div class="video reveal">
+        <button class="play" aria-label="Смотреть видео"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY US ============ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Почему мы</p>
+        <h2 class="display">Создано для бесстрашных</h2>
+      </div>
+      <div class="cards-4">
+        <article class="feature-card reveal">
+          <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v10M5 12h14M8 17a4 4 0 0 0 8 0"/></svg></div>
+          <h3>Опытный капитан</h3>
+          <p>10+ лет на реке Катунь. Каждый маршрут выучен, каждый порог изучен.</p>
+        </article>
+        <article class="feature-card reveal">
+          <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg></div>
+          <h3>Moggaro M700WJ</h3>
+          <p>Лучший джетбот в своём классе — алюминиевый корпус, V8 на 320 л.с., создан для рек.</p>
+        </article>
+        <article class="feature-card reveal">
+          <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>Безопасность</h3>
+          <p>Полный инструктаж, сертифицированные жилеты и протоколы безопасности перед каждым выходом.</p>
+        </article>
+        <article class="feature-card reveal">
+          <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <h3>Секретные маршруты</h3>
+          <p>Уголки Алтая, недоступные пешком или на машине — только на джетботе.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESTINATION ============ -->
+  <section class="destination section-alt">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Место</p>
+        <h2 class="display">Где горы встречают <span class="accent">Катунь</span></h2>
+        <p class="lead">Катунь прорезает сердце Республики Алтай — 318 километров молочно-бирюзовой воды, питаемой ледниками на высоте 2000 метров. Её каньоны, ущелья и пороги — одни из самых впечатляющих пейзажей Азии.</p>
+        <p class="lead">Многие места, куда мы ходим, недоступны по дороге или тропе. Только джетбот с осадкой 25 см дойдёт до скрытых берегов, древних скал и потайных пляжей.</p>
+        <div class="stats">
+          <div class="stat"><b>318 км</b><span>Длина реки</span></div>
+          <div class="stat"><b>2 000 м</b><span>Высота ледника</span></div>
+          <div class="stat"><b>8 лет</b><span>В работе</span></div>
+        </div>
+      </div>
+      <div class="dest-media reveal">
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80" alt="Бирюзовая река Катунь среди ущелий Алтая" width="1200" height="1040" loading="lazy" />
+        <div class="glass-row">
+          <div class="glass">
+            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=200&q=70" alt="" />
+            <div><b>Бирюзовая вода</b><span>Ледниковая Катунь</span></div>
+          </div>
+          <div class="glass">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=200&q=70" alt="" />
+            <div><b>С высоты</b><span>Съёмка с дрона</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE MACHINE ============ -->
+  <section class="machine" id="boat">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Катер</p>
+        <h2 class="display">Moggaro M700WJ</h2>
+        <p class="lead" style="margin-top:1rem;max-width:62ch">Российская точная инженерия встречает сибирскую дикость. Создан для максимальной отдачи в самых сложных речных условиях.</p>
+      </div>
+      <div class="machine-grid">
+        <div class="machine-media reveal">
+          <img src="https://images.unsplash.com/photo-1502933691298-84fc14542831?auto=format&fit=crop&w=1000&q=80" alt="Джетбот мчится по воде" width="1000" height="460" loading="lazy" />
+          <div class="thumbs">
+            <img src="https://images.unsplash.com/photo-1502933691298-84fc14542831?auto=format&fit=crop&w=400&q=70" alt="Пассажиры на джетботе" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=400&q=70" alt="Дельта реки с высоты" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=70" alt="Бирюзовая река" loading="lazy" />
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="spec">
+            <div class="spec-row"><span>Модель</span><b>Moggaro M700WJ</b></div>
+            <div class="spec-row"><span>Длина</span><b>7,0 м</b></div>
+            <div class="spec-row"><span>Ширина</span><b>2,4 м</b></div>
+            <div class="spec-row"><span>Двигатель</span><b>5.7L V8 — 320 л.с.</b></div>
+            <div class="spec-row"><span>Макс. скорость</span><b>80 км/ч</b></div>
+            <div class="spec-row"><span>Вместимость</span><b>14 пассажиров</b></div>
+            <div class="spec-row"><span>Движитель</span><b>Водомёт</b></div>
+            <div class="spec-row"><span>Корпус</span><b>Морской алюминий</b></div>
+          </div>
+          <div class="mini-cards">
+            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 12 8 8M4 12a8 8 0 0 1 16 0"/><circle cx="12" cy="12" r="1.5"/></svg></div><div><b>Скорость</b><span>До 80 км/ч</span></div></div>
+            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12h4l2-4 3 8 2-4h4"/></svg></div><div><b>Водомёт</b><span>Без открытого винта</span></div></div>
+            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m3 18 6-9 4 5 3-4 5 8H3Z"/></svg></div><div><b>Малая осадка</b><span>Всего 25 см</span></div></div>
+            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 6a3 3 0 0 1 0 6"/></svg></div><div><b>Вместимость</b><span>14 пассажиров</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" class="section-alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Что тебя ждёт</p>
+        <h2 class="display">Что ты испытаешь</h2>
+      </div>
+      <div class="cards-6">
+        <div class="xp reveal"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg></div><h3>Скорость</h3><span>80 км/ч на полном</span></div>
+        <div class="xp reveal"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div><h3>Развороты 360°</h3><span>Пируэты на месте</span></div>
+        <div class="xp reveal"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h9"/></svg></div><h3>Экстренный тормоз</h3><span>Мгновенная остановка</span></div>
+        <div class="xp reveal"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m3 18 6-9 4 5 3-4 5 8H3Z"/><circle cx="7" cy="7" r="1.5"/></svg></div><h3>Виды</h3><span>Панорамы Алтая</span></div>
+        <div class="xp reveal"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4V8Z"/><circle cx="12" cy="13" r="3"/></svg></div><h3>Профи-фото</h3><span>Съёмка GoPro в подарок</span></div>
+        <div class="xp reveal"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m12 3 2.5 6H21l-5 4 2 7-6-4-6 4 2-7-5-4h6.5L12 3Z"/></svg></div><h3>Адреналин</h3><span>Незабываемый драйв</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Галерея</p>
+        <h2 class="display">Снято в дикой природе</h2>
+      </div>
+      <div class="gallery-grid">
+        <figure class="g-wide g-tall reveal"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1000&q=80" alt="Долина горной реки" loading="lazy" /></figure>
+        <figure class="reveal"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Голубое горное озеро" loading="lazy" /></figure>
+        <figure class="reveal"><img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=600&q=80" alt="Дельта реки с высоты" loading="lazy" /></figure>
+        <figure class="g-wide reveal"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80" alt="Бирюзовое ущелье реки" loading="lazy" /></figure>
+        <figure class="reveal"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80" alt="Заснеженные вершины" loading="lazy" /></figure>
+        <figure class="reveal"><img src="https://images.unsplash.com/photo-1444492417251-9c84a5fa18e0?auto=format&fit=crop&w=600&q=80" alt="Осенние горы" loading="lazy" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <p class="eyebrow center">Как это работает</p>
+        <h2 class="display">От сообщения до впечатлений</h2>
+      </div>
+      <div class="timeline">
+        <div class="step step--left reveal">
+          <div class="node">01</div>
+          <div class="step-card">
+            <h3><span class="feature-icon"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 5h16v11H8l-4 3V5Z"/></svg></span>Первый контакт</h3>
+            <p>Напиши в WhatsApp или Telegram. Сообщи даты и число человек.</p>
+          </div>
+        </div>
+        <div class="step step--right reveal">
+          <div class="node">02</div>
+          <div class="step-card">
+            <h3><span class="feature-icon"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M5 12l4 4 10-10"/></svg></span>Подтверждение</h3>
+            <p>Подтверждаем свободное время за 2 часа и бронируем твой слот на реке.</p>
+          </div>
+        </div>
+        <div class="step step--left reveal">
+          <div class="node">03</div>
+          <div class="step-card">
+            <h3><span class="feature-icon"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/></svg></span>Встреча на причале</h3>
+            <p>Приходишь к точке старта на инструктаж и подбор спасжилета.</p>
+          </div>
+        </div>
+        <div class="step step--right reveal">
+          <div class="node">04</div>
+          <div class="step-card">
+            <h3><span class="feature-icon"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg></span>Старт</h3>
+            <p>Садишься в Moggaro, даёшь газ — и Катунь оживает.</p>
+          </div>
+        </div>
+        <div class="step step--left reveal">
+          <div class="node">05</div>
+          <div class="step-card">
+            <h3><span class="feature-icon"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg></span>Приключение</h3>
+            <p>От 1,5 до 3 часов на Катуни — скорость, развороты, видовые остановки и скрытые места.</p>
+          </div>
+        </div>
+        <div class="step step--right reveal">
+          <div class="node">06</div>
+          <div class="step-card">
+            <h3><span class="feature-icon"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 8h3l1.5-2h7L17 8h3v11H4V8Z"/><circle cx="12" cy="13" r="3"/></svg></span>Фото и финиш</h3>
+            <p>Отдаём все фото и видео с борта. Отмечаем впечатления на причале.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="story">
+    <div class="wrap split">
+      <div class="story-media reveal">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=80" alt="Горы Алтая с высоты" loading="lazy" />
+      </div>
+      <div class="story-body reveal">
+        <p class="eyebrow">Наша история</p>
+        <h2 class="display">Рождены на Катуни</h2>
+        <p class="lead">То, что в 2017-м началось с одного катера и любви к реке, выросло в самый надёжный джетбот-опыт Алтая. Мы выросли на этих водах — и до сих пор ловим драйв на каждом выходе.</p>
+        <p class="lead">Каждый капитан в команде — местный, сертифицированный и одержимый тем, чтобы безопасно показать дикую красоту Республики Алтай. Тысячи гостей, ноль происшествий, одна незабываемая река.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="section-alt">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <p class="eyebrow center">Полезно знать</p>
+        <h2 class="display">Частые вопросы</h2>
+      </div>
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-q">Это безопасно для новичков?<svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><p>Абсолютно. Опыт не нужен. Каждый выход начинается с полного инструктажа, а сертифицированные капитаны подбирают темп под вашу группу.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Что если плохая погода?<svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><p>Если условия небезопасны — переносим бесплатно или возвращаем деньги. Небольшой дождь нам не помеха: Катунь прекрасна в любую погоду.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Что надеть?<svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><p>Быстросохнущую одежду и надёжную обувь. Жилеты и непромокаемую экипировку выдаём. Немного промокнуть — часть удовольствия.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Сколько длится поездка?<svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><p>От 1,5 до 3 часов в зависимости от маршрута и группы. Поможем выбрать оптимальную длительность при бронировании.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Как забронировать и какие условия отмены?<svg class="ico chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><p>Напишите в WhatsApp или Telegram — предоплата не нужна. Бесплатная отмена за 48 часов до выхода.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final" id="book">
+    <div class="wrap">
+      <p class="eyebrow center reveal">Мест ограниченно</p>
+      <h2 class="display reveal">Готов к главному приключению на <span class="accent">Алтае?</span></h2>
+      <p class="reveal">Напиши менеджеру прямо сейчас, чтобы забронировать место. Отвечаем за 2 часа и собираем идеальную поездку под твою группу.</p>
+      <div class="final-actions reveal">
+        <a href="#" class="btn btn--green">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M20 12a8 8 0 1 1-3.4-6.5L20 4l-.8 3.2A8 8 0 0 1 20 12Z"/></svg></span>
+          Написать в WhatsApp
+        </a>
+        <a href="#" class="btn btn--tg">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m21 4-9 16-2-7-7-2 18-7Z"/></svg></span>
+          Написать в Telegram
+        </a>
+      </div>
+      <small class="reveal">Ответ за 2 часа · Без предоплаты · Бесплатная отмена за 48 часов</small>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand">ALTAI<span class="accent">JET</span></span>
+      <p>Приключения на джетботе по реке Катунь, Республика Алтай, Россия</p>
+    </div>
+    <div class="socials">
+      <a href="#" aria-label="WhatsApp"><svg class="ico" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3.4-6.5L20 4l-.8 3.2A8 8 0 0 1 20 12Z"/><path d="M8.5 9.5c.5 3 3 5.5 6 6l1.5-1.5-2-1-1 .8c-1.4-.6-2.6-1.8-3.2-3.2l.8-1-1-2Z"/></svg></a>
+      <a href="#" aria-label="Telegram"><svg class="ico" viewBox="0 0 24 24"><path d="m21 4-9 16-2-7-7-2 18-7Z"/></svg></a>
+    </div>
+    <p class="copyright">© 2024 AltaiJet. Все права защищены.</p>
+  </div>
+</footer>
+
+<script>
+  // Тень хедера при скролле
+  const header = document.getElementById("header");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 40);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Мобильное меню
+  const nav = document.getElementById("nav");
+  const toggle = document.getElementById("navToggle");
+  toggle.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+  nav.querySelectorAll(".nav-links a").forEach((a) =>
+    a.addEventListener("click", () => nav.classList.remove("open"))
+  );
+
+  // Аккордеон FAQ
+  document.querySelectorAll(".faq-item").forEach((item) => {
+    const q = item.querySelector(".faq-q");
+    const a = item.querySelector(".faq-a");
+    q.addEventListener("click", () => {
+      const isOpen = item.classList.toggle("open");
+      a.style.maxHeight = isOpen ? a.scrollHeight + "px" : 0;
+    });
+  });
+
+  // Появление при скролле
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+  );
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
