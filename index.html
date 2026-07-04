@@ -110,6 +110,28 @@
   .btn--dark:hover { background: rgba(255, 255, 255, 0.16); }
   .btn .ic { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: rgba(0, 0, 0, 0.12); }
   .btn--tg .ic, .btn--dark .ic { background: rgba(255, 255, 255, 0.18); }
+  .btn--max { background: #7c5cff; color: #fff; box-shadow: 0 14px 30px -14px #7c5cff; }
+  .btn--max:hover { background: #6a49e6; }
+  .btn--max .ic { background: rgba(255, 255, 255, 0.2); }
+  .final-phone { display: inline-block; font-family: var(--font-display); font-size: 1.5rem; color: #fff; margin: 0.2rem 0 1.4rem; letter-spacing: 0.03em; transition: color var(--dur) var(--ease); }
+  .final-phone:hover { color: var(--green-mint); }
+  /* ---- price list ---- */
+  .price-group { margin-top: 2.8rem; }
+  .price-group-title { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.05rem; color: var(--green); margin-bottom: 1.1rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--line); }
+  .price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .price-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.7rem 1.9rem; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px -28px rgba(0,0,0,0.35); }
+  .price-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; }
+  .price-card-head h4 { font-family: var(--font-display); font-size: 1.28rem; }
+  .price-tag { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--green); white-space: nowrap; }
+  .price-tag small { font-size: 0.68rem; color: var(--muted); font-weight: 600; margin-left: 0.25rem; }
+  .price-note { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.9rem; }
+  .price-list { list-style: none; display: grid; gap: 0.5rem; }
+  .price-list li { position: relative; padding-left: 1.25rem; font-size: 0.94rem; color: var(--ink-soft); }
+  .price-list li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .price-extras { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.6rem; margin-top: 2.8rem; padding: 1.4rem 1.9rem; background: var(--green-mint); border-radius: var(--radius); }
+  .price-extras-title { font-weight: 700; }
+  .price-extra { font-size: 0.95rem; color: var(--ink-soft); }
 
   .ico { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -406,10 +428,11 @@
       gap: 1.2rem; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.3);
     }
     .nav.open .nav-links a { color: var(--ink); }
-    .cards-4, .cards-6 { grid-template-columns: 1fr 1fr; }
+    .cards-4, .cards-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
     .g-wide { grid-column: span 1; }
     .mini-cards { grid-template-columns: 1fr; }
+    .price-cards { grid-template-columns: 1fr; }
     .hero-actions .btn, .final-actions .btn { flex: 1 1 auto; justify-content: center; }
   }
 </style>
@@ -435,8 +458,9 @@
       </a>
       <ul class="nav-links">
         <li><a href="#experience">Впечатления</a></li>
-        <li><a href="#about">Об Алтае</a></li>
+        <li><a href="#about">Преимущества</a></li>
         <li><a href="#boat">Катер</a></li>
+        <li><a href="#price">Цены</a></li>
         <li><a href="#gallery">Галерея</a></li>
         <li><a href="#faq">Вопросы</a></li>
       </ul>
@@ -458,20 +482,20 @@
         <span>Покори</span>
         <span><span class="accent">дикую</span> Катунь</span>
       </h1>
-      <p class="reveal">Незабываемое приключение на джетботе через захватывающие ущелья и кристальные воды дикого Алтая. Дарим эмоции с 2017 года.</p>
+      <p class="reveal">Незабываемое приключение на джетботе через захватывающие ущелья и кристальные воды дикого Алтая.</p>
       <div class="hero-actions reveal">
-        <a href="#book" class="btn btn--green">
+        <a href="https://wa.me/79994633150" target="_blank" rel="noopener" class="btn btn--green">
           <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M20 12a8 8 0 1 1-3.4-6.5L20 4l-.8 3.2A8 8 0 0 1 20 12Z"/><path d="M8.5 9.5c.5 3 3 5.5 6 6l1.5-1.5-2-1-1 .8c-1.4-.6-2.6-1.8-3.2-3.2l.8-1-1-2Z"/></svg></span>
           Написать в WhatsApp
         </a>
-        <a href="#book" class="btn btn--dark">
+        <a href="https://t.me/+79994633150" target="_blank" rel="noopener" class="btn btn--dark">
           <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m21 4-9 16-2-7-7-2 18-7Z"/></svg></span>
           Написать в Telegram
         </a>
       </div>
       <ul class="hero-facts reveal">
         <li><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Алтай, Россия</li>
-        <li><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 6a3 3 0 0 1 0 6M21 20c0-2-1.5-3.5-3.5-4.2"/></svg>До 14 пассажиров</li>
+        <li><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 6a3 3 0 0 1 0 6M21 20c0-2-1.5-3.5-3.5-4.2"/></svg>До 12 пассажиров</li>
         <li><svg class="ico" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/></svg>Опытный капитан</li>
         <li><svg class="ico" viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg>Полная безопасность</li>
       </ul>
@@ -484,7 +508,6 @@
     <div class="wrap">
       <p class="eyebrow center reveal">На воде</p>
       <h2 class="display reveal">Почувствуй мощь джетбота</h2>
-      <p class="lead reveal">Чистый адреналин на скорости 80 км/ч среди отвесных стен каньона, брызг порогов и горных вершин, врезающихся в небо. Это Алтай в самом первозданном виде.</p>
       <div class="video reveal">
         <video src="video/clip-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
       </div>
@@ -495,19 +518,19 @@
   <section id="about">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Почему мы</p>
-        <h2 class="display">Создано для бесстрашных</h2>
+        <p class="eyebrow">Преимущества</p>
+        <h2 class="display">Почему выбирают нас</h2>
       </div>
       <div class="cards-4">
         <article class="feature-card reveal">
           <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v10M5 12h14M8 17a4 4 0 0 0 8 0"/></svg></div>
           <h3>Опытный капитан</h3>
-          <p>10+ лет на реке Катунь. Каждый маршрут выучен, каждый порог изучен.</p>
+          <p>Местный экипаж, знающий каждый порог и поворот Катуни наизусть.</p>
         </article>
         <article class="feature-card reveal">
           <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg></div>
-          <h3>Moggaro M700WJ</h3>
-          <p>Лучший джетбот в своём классе — алюминиевый корпус, V8 на 320 л.с., создан для рек.</p>
+          <h3>Современная лодка</h3>
+          <p>Мощный джетбот с алюминиевым корпусом и водомётом — создан для горных рек.</p>
         </article>
         <article class="feature-card reveal">
           <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
@@ -516,8 +539,8 @@
         </article>
         <article class="feature-card reveal">
           <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
-          <h3>Секретные маршруты</h3>
-          <p>Уголки Алтая, недоступные пешком или на машине — только на джетботе.</p>
+          <h3>Уникальный маршрут</h3>
+          <p>Места, недоступные пешком или на машине — только на джетботе.</p>
         </article>
       </div>
     </div>
@@ -534,7 +557,7 @@
         <div class="stats">
           <div class="stat"><b>318 км</b><span>Длина реки</span></div>
           <div class="stat"><b>2 000 м</b><span>Высота ледника</span></div>
-          <div class="stat"><b>8 лет</b><span>В работе</span></div>
+          <div class="stat"><b>25 см</b><span>Осадка джетбота</span></div>
         </div>
       </div>
       <div class="dest-media reveal">
@@ -565,7 +588,7 @@
         <div class="machine-media reveal">
           <video src="video/clip-1.mp4" autoplay muted loop playsinline preload="metadata" width="1000" height="460" aria-label="Джетбот мчится по воде"></video>
           <div class="thumbs">
-            <img src="https://images.unsplash.com/photo-1502933691298-84fc14542831?auto=format&fit=crop&w=400&q=70" alt="Пассажиры на джетботе" loading="lazy" />
+            <img src="images/boat-1.jpg" alt="Джетбот Moggaro у причала" loading="lazy" />
             <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=400&q=70" alt="Дельта реки с высоты" loading="lazy" />
             <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=70" alt="Бирюзовая река" loading="lazy" />
           </div>
@@ -577,15 +600,9 @@
             <div class="spec-row"><span>Ширина</span><b>2,4 м</b></div>
             <div class="spec-row"><span>Двигатель</span><b>5.7L V8 — 320 л.с.</b></div>
             <div class="spec-row"><span>Макс. скорость</span><b>80 км/ч</b></div>
-            <div class="spec-row"><span>Вместимость</span><b>14 пассажиров</b></div>
+            <div class="spec-row"><span>Вместимость</span><b>12 пассажиров</b></div>
             <div class="spec-row"><span>Движитель</span><b>Водомёт</b></div>
             <div class="spec-row"><span>Корпус</span><b>Морской алюминий</b></div>
-          </div>
-          <div class="mini-cards">
-            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 12 8 8M4 12a8 8 0 0 1 16 0"/><circle cx="12" cy="12" r="1.5"/></svg></div><div><b>Скорость</b><span>До 80 км/ч</span></div></div>
-            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12h4l2-4 3 8 2-4h4"/></svg></div><div><b>Водомёт</b><span>Без открытого винта</span></div></div>
-            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="m3 18 6-9 4 5 3-4 5 8H3Z"/></svg></div><div><b>Малая осадка</b><span>Всего 25 см</span></div></div>
-            <div class="mini"><div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 6a3 3 0 0 1 0 6"/></svg></div><div><b>Вместимость</b><span>14 пассажиров</span></div></div>
           </div>
         </div>
       </div>
@@ -618,12 +635,12 @@
         <h2 class="display">Снято в дикой природе</h2>
       </div>
       <div class="gallery-grid">
-        <figure class="g-wide g-tall reveal"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1000&q=80" alt="Долина горной реки" loading="lazy" /></figure>
-        <figure class="reveal"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Голубое горное озеро" loading="lazy" /></figure>
-        <figure class="reveal"><img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=600&q=80" alt="Дельта реки с высоты" loading="lazy" /></figure>
-        <figure class="g-wide reveal"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80" alt="Бирюзовое ущелье реки" loading="lazy" /></figure>
-        <figure class="reveal"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80" alt="Заснеженные вершины" loading="lazy" /></figure>
-        <figure class="reveal"><img src="https://images.unsplash.com/photo-1444492417251-9c84a5fa18e0?auto=format&fit=crop&w=600&q=80" alt="Осенние горы" loading="lazy" /></figure>
+        <figure class="g-wide g-tall reveal"><img src="images/gallery-1.jpg" alt="Джетбот на реке Катунь" loading="lazy" /></figure>
+        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Поездка на джетботе" loading="lazy" /></figure>
+        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Джетбот на скорости" loading="lazy" /></figure>
+        <figure class="g-wide reveal"><img src="images/gallery-1.jpg" alt="Джетбот среди гор Алтая" loading="lazy" /></figure>
+        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Пассажиры джетбота" loading="lazy" /></figure>
+        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Река Катунь с воды" loading="lazy" /></figure>
       </div>
     </div>
   </section>
@@ -683,16 +700,16 @@
   </section>
 
   <!-- ============ STORY ============ -->
-  <section class="story">
+  <section class="story" id="company">
     <div class="wrap split">
       <div class="story-media reveal">
         <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=80" alt="Горы Алтая с высоты" loading="lazy" />
       </div>
       <div class="story-body reveal">
-        <p class="eyebrow">Наша история</p>
-        <h2 class="display">Рождены на Катуни</h2>
-        <p class="lead">То, что в 2017-м началось с одного катера и любви к реке, выросло в самый надёжный джетбот-опыт Алтая. Мы выросли на этих водах — и до сих пор ловим драйв на каждом выходе.</p>
-        <p class="lead">Каждый капитан в команде — местный, сертифицированный и одержимый тем, чтобы безопасно показать дикую красоту Республики Алтай. Тысячи гостей, ноль происшествий, одна незабываемая река.</p>
+        <p class="eyebrow">О компании</p>
+        <h2 class="display">Команда, которой доверяют</h2>
+        <p class="lead">Мы — команда, влюблённая в Катунь. Показываем гостям дикую красоту Республики Алтай с воды — там, куда не добраться пешком или на машине.</p>
+        <p class="lead">Каждый капитан местный и сертифицированный. Полный инструктаж, проверенное снаряжение и строгие протоколы безопасности перед каждым выходом. Ваша безопасность и впечатления — на первом месте.</p>
       </div>
     </div>
   </section>
@@ -730,21 +747,104 @@
   </section>
 
   <!-- ============ FINAL CTA ============ -->
+  <!-- ============ PRICE ============ -->
+  <section id="price" class="section-alt price">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow center">Тарифы</p>
+        <h2 class="display">Маршруты и цены</h2>
+      </div>
+
+      <div class="price-group reveal">
+        <h3 class="price-group-title">Короткие маршруты · Чемал / Патмос / Зубы дракона</h3>
+        <div class="price-cards">
+          <article class="price-card">
+            <div class="price-card-head"><h4>Прогулка</h4><span class="price-tag">5 000 ₽<small>/чел</small></span></div>
+            <p class="price-note">Спокойный формат · 20–25 минут</p>
+            <ul class="price-list">
+              <li>Маршрут: «Зубы дракона» → «Патмос» или «Чемал» → «Зубы дракона»</li>
+              <li>При группе от 5 человек</li>
+              <li>Дети до 5 лет — бесплатно (до 4 детей на 4 взрослых в лодке)</li>
+              <li>Дети до 10 лет — скидка 50%</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <div class="price-card-head"><h4>Экстрим</h4><span class="price-tag">10 000 ₽<small>/чел</small></span></div>
+            <p class="price-note">Динамичный формат · 30 минут</p>
+            <ul class="price-list">
+              <li>Маршрут аналогичен «Прогулке»</li>
+              <li>При группе от 5 человек</li>
+              <li>С 14 лет — полная стоимость</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="price-group reveal">
+        <h3 class="price-group-title">Камышинский водопад</h3>
+        <div class="price-cards">
+          <article class="price-card">
+            <div class="price-card-head"><h4>Водопад · Прогулка</h4><span class="price-tag">от 15 000 ₽<small>/лодка</small></span></div>
+            <p class="price-note">40 мин спуск · 1 час стоянка · 60 мин подъём</p>
+            <ul class="price-list">
+              <li>Полная посадка 9–12 человек — 15 000 ₽</li>
+              <li>Группа 5–8 человек — 20 000 ₽</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <div class="price-card-head"><h4>Водопад · Экстрим</h4><span class="price-tag">от 20 000 ₽<small>/лодка</small></span></div>
+            <p class="price-note">Динамичный формат</p>
+            <ul class="price-list">
+              <li>Полная посадка 9–12 человек — 20 000 ₽</li>
+              <li>Группа 5–8 человек — 30 000 ₽</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="price-group reveal">
+        <h3 class="price-group-title">Дальние маршруты и аренда</h3>
+        <div class="price-cards">
+          <article class="price-card">
+            <div class="price-card-head"><h4>До Манжерока</h4><span class="price-tag">400–450 000 ₽<small>/лодка</small></span></div>
+            <p class="price-note">5 часов · с причалом на песчаный берег</p>
+          </article>
+          <article class="price-card">
+            <div class="price-card-head"><h4>Выкуп лодки на день</h4><span class="price-tag">600 000 ₽</span></div>
+            <p class="price-note">Лодка в вашем распоряжении весь день + полный бак</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="price-extras reveal">
+        <span class="price-extras-title">📸 Дополнительно</span>
+        <span class="price-extra">Видеосъёмка на GoPro — 2 000 ₽</span>
+        <span class="price-extra">Видеосъёмка с дрона — 5 000 ₽</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOOK ============ -->
   <section class="final" id="book">
     <div class="wrap">
       <p class="eyebrow center reveal">Мест ограниченно</p>
       <h2 class="display reveal">Готов к главному приключению на <span class="accent">Алтае?</span></h2>
       <p class="reveal">Напиши менеджеру прямо сейчас, чтобы забронировать место. Отвечаем за 2 часа и собираем идеальную поездку под твою группу.</p>
       <div class="final-actions reveal">
-        <a href="#" class="btn btn--green">
+        <a href="https://wa.me/79994633150" target="_blank" rel="noopener" class="btn btn--green">
           <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M20 12a8 8 0 1 1-3.4-6.5L20 4l-.8 3.2A8 8 0 0 1 20 12Z"/></svg></span>
-          Написать в WhatsApp
+          WhatsApp
         </a>
-        <a href="#" class="btn btn--tg">
+        <a href="https://t.me/+79994633150" target="_blank" rel="noopener" class="btn btn--tg">
           <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m21 4-9 16-2-7-7-2 18-7Z"/></svg></span>
-          Написать в Telegram
+          Telegram
+        </a>
+        <a href="https://max.ru/" target="_blank" rel="noopener" class="btn btn--max">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 5h16v11H9l-5 4V5Z"/></svg></span>
+          Max
         </a>
       </div>
+      <a href="tel:+79994633150" class="final-phone reveal">+7 999 463‑31‑50</a>
       <small class="reveal">Ответ за 2 часа · Без предоплаты · Бесплатная отмена за 48 часов</small>
     </div>
   </section>

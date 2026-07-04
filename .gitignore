@@ -3,3 +3,8 @@
 *.jpeg
 *.jpg
 .playwright-mcp/
+
+# Keep real content images tracked
+!images/*.png
+!images/*.jpeg
+!images/*.jpg
