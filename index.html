@@ -411,6 +411,13 @@
   .final p { max-width: 52ch; margin: 0 auto 2.4rem; color: rgba(255,255,255,0.85); font-size: 1.12rem; }
   .final-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 1.6rem; }
   .final small { color: rgba(255,255,255,0.6); letter-spacing: 0.01em; }
+  .final-locations { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; max-width: 760px; margin: 2.8rem auto 0; text-align: left; }
+  .loc-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: var(--radius); padding: 1rem 1rem 0.9rem; }
+  .loc-name { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.05rem; color: #fff; margin-bottom: 0.8rem; transition: color var(--dur) var(--ease); }
+  .loc-name:hover { color: var(--green-mint); }
+  .loc-name svg { width: 18px; height: 18px; color: var(--green-mint); flex-shrink: 0; }
+  .loc-map { border-radius: 12px; overflow: hidden; height: 200px; background: #0a0f0c; }
+  .loc-map iframe { width: 100%; height: 100%; border: 0; display: block; }
 
   /* ============ FOOTER ============ */
   .site-footer { background: var(--dark); color: rgba(255,255,255,0.7); padding-block: 3rem; }
@@ -454,6 +461,7 @@
     .g-wide { grid-column: span 1; }
     .mini-cards { grid-template-columns: 1fr; }
     .price-cards { grid-template-columns: 1fr; }
+    .final-locations { grid-template-columns: 1fr; }
     .hero-actions .btn, .final-actions .btn { flex: 1 1 auto; justify-content: center; }
   }
 </style>
@@ -882,7 +890,7 @@
   <!-- ============ BOOK ============ -->
   <section class="final" id="book">
     <div class="wrap">
-      <p class="eyebrow center reveal">Мест ограниченно</p>
+      <p class="eyebrow center reveal">Количество мест ограничено</p>
       <h2 class="display reveal">Готов к главному приключению на <span class="accent">Алтае?</span></h2>
       <p class="reveal">Напиши менеджеру прямо сейчас, чтобы забронировать место. Отвечаем за 2 часа и собираем идеальную поездку под твою группу.</p>
       <div class="final-actions reveal">
@@ -901,6 +909,26 @@
       </div>
       <a href="tel:+79994633150" class="final-phone reveal">+7 999 463‑31‑50</a>
       <small class="reveal">Ответ за 2 часа · Без предоплаты · Бесплатная отмена за 48 часов</small>
+      <div class="final-locations reveal">
+        <div class="loc-card">
+          <a class="loc-name" href="https://2gis.ru/gornoaltaysk/geo/3800547885041972/85.987670,51.475747" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Катунская улица, 1Б
+          </a>
+          <div class="loc-map">
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=85.987670%2C51.475747&z=16&pt=85.987670%2C51.475747,pm2rdm" title="Катунская улица, 1Б на карте" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="loc-card">
+          <a class="loc-name" href="https://2gis.ru/gornoaltaysk/geo/70000001061614761/85.997364,51.409847" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Чемалмоторафт
+          </a>
+          <div class="loc-map">
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=85.997364%2C51.409847&z=16&pt=85.997364%2C51.409847,pm2rdm" title="Чемалмоторафт на карте" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
