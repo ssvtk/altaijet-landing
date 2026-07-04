@@ -7,13 +7,13 @@
 <meta name="description" content="Незабываемое приключение на джетботе через ущелья и кристальные воды дикого Алтая. Река Катунь, Республика Алтай, Россия." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@500;600;700&family=Oswald:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   /* ============ TOKENS ============ */
   :root {
-    --green: #12d65b;
-    --green-dark: #0fbd50;
-    --green-mint: #d9f7e4;
+    --green: #1A4A37;
+    --green-dark: #123729;
+    --green-mint: #e2ede8;
     --ink: #0e0e0e;
     --ink-soft: #2a2a2a;
     --muted: #6b6b6b;
@@ -103,7 +103,7 @@
   }
   .btn:hover { transform: translateY(-3px); }
   .btn:active { transform: translateY(0); }
-  .btn--green { background: var(--green); color: #062611; box-shadow: 0 14px 30px -14px var(--green); }
+  .btn--green { background: var(--green); color: #F5F2EA; box-shadow: 0 14px 30px -14px var(--green); }
   .btn--green:hover { background: var(--green-dark); }
   .btn--tg { background: var(--tg); color: #fff; box-shadow: 0 14px 30px -14px var(--tg); }
   .btn--dark { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(6px); }
@@ -139,6 +139,21 @@
   .brand { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; transition: color var(--dur) var(--ease); }
   .brand .accent { color: var(--green); }
   .scrolled .brand { color: var(--ink); }
+  /* ---- SVG brand logo ---- */
+  .brand-logo { display: inline-flex; align-items: center; height: 42px; }
+  .brand-logo svg { height: 100%; width: auto; display: block; }
+  .brand-logo .lg-word, .brand-logo .lg-mark { fill: #fff; transition: fill var(--dur) var(--ease); }
+  .brand-logo .lg-mark-stroke { stroke: #fff; transition: stroke var(--dur) var(--ease); }
+  .scrolled .brand-logo .lg-word { fill: var(--ink); }
+  .scrolled .brand-logo .lg-mark { fill: var(--green); }
+  .scrolled .brand-logo .lg-mark-stroke { stroke: var(--green); }
+  .brand-logo--footer { height: 48px; }
+  .brand-logo--footer .lg-word { fill: #fff; }
+  .brand-logo--footer .lg-mark { fill: #6fae91; }
+  .brand-logo--footer .lg-mark-stroke { stroke: #6fae91; }
+  .brand-logo--footer .lg-sub { fill: rgba(255,255,255,0.55); }
+  /* ---- inline videos ---- */
+  .video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   .nav-links { display: flex; gap: 2rem; }
   .nav-links a {
     font-weight: 700;
@@ -260,7 +275,7 @@
   /* ============ THE MACHINE ============ */
   .machine .section-head { margin-bottom: 2.6rem; }
   .machine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
-  .machine-media img { width: 100%; height: 460px; object-fit: cover; border-radius: var(--radius); }
+  .machine-media img, .machine-media video { width: 100%; height: 460px; object-fit: cover; border-radius: var(--radius); display: block; }
   .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 0.7rem; }
   .thumbs img { height: 90px; object-fit: cover; border-radius: 10px; }
   .spec { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.4rem 1.6rem; }
@@ -365,7 +380,7 @@
     background: var(--dark-2); border: 1px solid rgba(255,255,255,0.1); color: #fff;
     transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
-  .socials a:hover { background: var(--green); color: #062611; transform: translateY(-3px); }
+  .socials a:hover { background: var(--green); color: #F5F2EA; transform: translateY(-3px); }
   .copyright { font-size: 0.86rem; }
 
   /* ============ RESPONSIVE ============ */
@@ -405,7 +420,19 @@
 <header class="site-header" id="header">
   <div class="wrap">
     <nav class="nav" id="nav" aria-label="Основная навигация">
-      <a href="#top" class="brand">ALTAI<span class="accent">JET</span></a>
+      <a href="#top" class="brand-logo" aria-label="АлтайДжет — на главную">
+        <svg viewBox="6 30 392 56" role="img" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(8,24)">
+            <circle class="lg-mark" cx="14" cy="30" r="3.4" />
+            <g class="lg-mark-stroke" fill="none" stroke-width="2.8" stroke-linecap="round">
+              <path d="M22 18 C 39 22, 39 38, 22 42" />
+              <path d="M29 23 C 40 25.5, 40 34.5, 29 37" />
+              <path d="M36 27 C 42 28.4, 42 31.6, 36 33" />
+            </g>
+          </g>
+          <text x="78" y="70" font-family="'Cormorant Garamond',serif" font-size="42" font-weight="600" letter-spacing="5"><tspan class="lg-word">АЛТАЙ</tspan><tspan class="lg-mark">ДЖЕТ</tspan></text>
+        </svg>
+      </a>
       <ul class="nav-links">
         <li><a href="#experience">Впечатления</a></li>
         <li><a href="#about">Об Алтае</a></li>
@@ -459,7 +486,7 @@
       <h2 class="display reveal">Почувствуй мощь джетбота</h2>
       <p class="lead reveal">Чистый адреналин на скорости 80 км/ч среди отвесных стен каньона, брызг порогов и горных вершин, врезающихся в небо. Это Алтай в самом первозданном виде.</p>
       <div class="video reveal">
-        <button class="play" aria-label="Смотреть видео"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        <video src="video/clip-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
       </div>
     </div>
   </section>
@@ -536,7 +563,7 @@
       </div>
       <div class="machine-grid">
         <div class="machine-media reveal">
-          <img src="https://images.unsplash.com/photo-1502933691298-84fc14542831?auto=format&fit=crop&w=1000&q=80" alt="Джетбот мчится по воде" width="1000" height="460" loading="lazy" />
+          <video src="video/clip-1.mp4" autoplay muted loop playsinline preload="metadata" width="1000" height="460" aria-label="Джетбот мчится по воде"></video>
           <div class="thumbs">
             <img src="https://images.unsplash.com/photo-1502933691298-84fc14542831?auto=format&fit=crop&w=400&q=70" alt="Пассажиры на джетботе" loading="lazy" />
             <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=400&q=70" alt="Дельта реки с высоты" loading="lazy" />
@@ -727,7 +754,20 @@
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
-      <span class="brand">ALTAI<span class="accent">JET</span></span>
+      <span class="brand-logo brand-logo--footer" aria-label="АлтайДжет">
+        <svg viewBox="6 30 392 74" role="img" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(8,24)">
+            <circle class="lg-mark" cx="14" cy="30" r="3.4" />
+            <g class="lg-mark-stroke" fill="none" stroke-width="2.8" stroke-linecap="round">
+              <path d="M22 18 C 39 22, 39 38, 22 42" />
+              <path d="M29 23 C 40 25.5, 40 34.5, 29 37" />
+              <path d="M36 27 C 42 28.4, 42 31.6, 36 33" />
+            </g>
+          </g>
+          <text x="78" y="70" font-family="'Cormorant Garamond',serif" font-size="42" font-weight="600" letter-spacing="5"><tspan class="lg-word">АЛТАЙ</tspan><tspan class="lg-mark">ДЖЕТ</tspan></text>
+          <text class="lg-sub" x="80" y="97" font-family="'Manrope',sans-serif" font-size="10" font-weight="700" letter-spacing="2.8">РЕЧНЫЕ ЭКСПЕДИЦИИ · АЛТАЙ</text>
+        </svg>
+      </span>
       <p>Приключения на джетботе по реке Катунь, Республика Алтай, Россия</p>
     </div>
     <div class="socials">
