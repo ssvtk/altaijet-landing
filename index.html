@@ -330,6 +330,23 @@
   .gallery-grid figure { overflow: hidden; border-radius: var(--radius); }
   .gallery-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
   .gallery-grid figure:hover img { transform: scale(1.07); }
+  /* ---- media gallery / slider ---- */
+  .mediagal { display: block; }
+  .mediagal-stage { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 10; background: #0a0f0c; }
+  .mg-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease); }
+  .mg-slide.is-active { opacity: 1; visibility: visible; }
+  .mg-slide img, .mg-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mg-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; border: none; background: rgba(255,255,255,0.86); color: var(--ink); display: grid; place-items: center; font-size: 1.7rem; line-height: 1; cursor: pointer; box-shadow: 0 8px 22px -10px rgba(0,0,0,0.55); transition: background 0.2s var(--ease), transform 0.2s var(--ease); z-index: 2; }
+  .mg-arrow:hover { background: #fff; transform: translateY(-50%) scale(1.06); }
+  .mg-prev { left: 14px; } .mg-next { right: 14px; }
+  .mg-count { position: absolute; right: 14px; bottom: 12px; background: rgba(10,14,11,0.6); color: #fff; font-size: 0.78rem; letter-spacing: 0.03em; padding: 0.28rem 0.65rem; border-radius: 20px; z-index: 2; backdrop-filter: blur(4px); }
+  .mediagal-thumbs { display: grid; grid-auto-flow: column; grid-auto-columns: 100px; gap: 0.7rem; margin-top: 0.8rem; overflow-x: auto; scrollbar-width: thin; padding-bottom: 0.3rem; scroll-snap-type: x proximity; }
+  .mg-thumb { position: relative; height: 68px; border: none; padding: 0; border-radius: 10px; overflow: hidden; cursor: pointer; opacity: 0.5; transition: opacity 0.2s var(--ease); outline: 2px solid transparent; outline-offset: 2px; background: #0a0f0c; scroll-snap-align: center; }
+  .mg-thumb img, .mg-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mg-thumb.is-active { opacity: 1; outline-color: var(--green); }
+  .mg-thumb:hover { opacity: 0.85; }
+  .mg-play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; pointer-events: none; }
+  .mg-play svg { width: 22px; height: 22px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7)); }
   .g-wide { grid-column: span 2; }
   .g-tall { grid-row: span 2; }
 
@@ -564,17 +581,21 @@
           <div class="stat"><b>25 см</b><span>Осадка джетбота</span></div>
         </div>
       </div>
-      <div class="dest-media reveal">
-        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80" alt="Бирюзовая река Катунь среди ущелий Алтая" width="1200" height="1040" loading="lazy" />
-        <div class="glass-row">
-          <div class="glass">
-            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=200&q=70" alt="" />
-            <div><b>Бирюзовая вода</b><span>Ледниковая Катунь</span></div>
+      <div class="mediagal reveal" data-mediagal>
+        <div class="mediagal-stage">
+          <div class="mediagal-slides">
+            <figure class="mg-slide is-active"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80" alt="Бирюзовая река Катунь среди ущелий Алтая" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=80" alt="Дельта реки с высоты" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" alt="Голубое горное озеро Алтая" loading="lazy" /></figure>
           </div>
-          <div class="glass">
-            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=200&q=70" alt="" />
-            <div><b>С высоты</b><span>Съёмка с дрона</span></div>
-          </div>
+          <button class="mg-arrow mg-prev" type="button" aria-label="Предыдущее фото">‹</button>
+          <button class="mg-arrow mg-next" type="button" aria-label="Следующее фото">›</button>
+          <div class="mg-count"><span class="mg-cur">1</span> / <span class="mg-total">3</span></div>
+        </div>
+        <div class="mediagal-thumbs">
+          <button class="mg-thumb is-active" type="button" aria-label="Фото 1"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=70" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 2"><img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=300&q=70" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 3"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=300&q=70" alt="" loading="lazy" /></button>
         </div>
       </div>
     </div>
@@ -589,12 +610,21 @@
         <p class="lead" style="margin-top:1rem;max-width:62ch">Российская точная инженерия встречает сибирскую дикость. Создан для максимальной отдачи в самых сложных речных условиях.</p>
       </div>
       <div class="machine-grid">
-        <div class="machine-media reveal">
-          <video src="video/clip-1.mp4" autoplay muted loop playsinline preload="metadata" width="1000" height="460" aria-label="Джетбот мчится по воде"></video>
-          <div class="thumbs">
-            <img src="images/boat-1.jpg" alt="Джетбот Moggaro у причала" loading="lazy" />
-            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=400&q=70" alt="Дельта реки с высоты" loading="lazy" />
-            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=70" alt="Бирюзовая река" loading="lazy" />
+        <div class="mediagal reveal" data-mediagal>
+          <div class="mediagal-stage">
+            <div class="mediagal-slides">
+              <figure class="mg-slide is-active"><img src="images/boat-1.jpg" alt="Джетбот Moggaro у причала" loading="lazy" /></figure>
+              <figure class="mg-slide"><img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=80" alt="Дельта реки с высоты" loading="lazy" /></figure>
+              <figure class="mg-slide"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80" alt="Бирюзовая река Катунь" loading="lazy" /></figure>
+            </div>
+            <button class="mg-arrow mg-prev" type="button" aria-label="Предыдущее фото">‹</button>
+            <button class="mg-arrow mg-next" type="button" aria-label="Следующее фото">›</button>
+            <div class="mg-count"><span class="mg-cur">1</span> / <span class="mg-total">3</span></div>
+          </div>
+          <div class="mediagal-thumbs">
+            <button class="mg-thumb is-active" type="button" aria-label="Фото 1"><img src="images/boat-1.jpg" alt="" loading="lazy" /></button>
+            <button class="mg-thumb" type="button" aria-label="Фото 2"><img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=300&q=70" alt="" loading="lazy" /></button>
+            <button class="mg-thumb" type="button" aria-label="Фото 3"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=70" alt="" loading="lazy" /></button>
           </div>
         </div>
         <div class="reveal">
@@ -638,13 +668,30 @@
         <p class="eyebrow">Галерея</p>
         <h2 class="display">Снято в дикой природе</h2>
       </div>
-      <div class="gallery-grid">
-        <figure class="g-wide g-tall reveal"><img src="images/gallery-1.jpg" alt="Джетбот на реке Катунь" loading="lazy" /></figure>
-        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Поездка на джетботе" loading="lazy" /></figure>
-        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Джетбот на скорости" loading="lazy" /></figure>
-        <figure class="g-wide reveal"><img src="images/gallery-1.jpg" alt="Джетбот среди гор Алтая" loading="lazy" /></figure>
-        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Пассажиры джетбота" loading="lazy" /></figure>
-        <figure class="reveal"><img src="images/gallery-1.jpg" alt="Река Катунь с воды" loading="lazy" /></figure>
+      <div class="mediagal reveal" data-mediagal>
+        <div class="mediagal-stage">
+          <div class="mediagal-slides">
+            <figure class="mg-slide is-active"><video src="video/clip-1.mp4" muted loop playsinline preload="metadata"></video></figure>
+            <figure class="mg-slide"><img src="images/gallery-1.jpg" alt="Джетбот на реке Катунь" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="images/gallery-1.jpg" alt="Поездка на джетботе" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="images/gallery-1.jpg" alt="Джетбот на скорости" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="images/gallery-1.jpg" alt="Джетбот среди гор Алтая" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="images/gallery-1.jpg" alt="Пассажиры джетбота" loading="lazy" /></figure>
+            <figure class="mg-slide"><img src="images/gallery-1.jpg" alt="Река Катунь с воды" loading="lazy" /></figure>
+          </div>
+          <button class="mg-arrow mg-prev" type="button" aria-label="Предыдущее">‹</button>
+          <button class="mg-arrow mg-next" type="button" aria-label="Следующее">›</button>
+          <div class="mg-count"><span class="mg-cur">1</span> / <span class="mg-total">7</span></div>
+        </div>
+        <div class="mediagal-thumbs">
+          <button class="mg-thumb is-active" type="button" aria-label="Видео"><video src="video/clip-1.mp4" muted playsinline preload="metadata"></video><span class="mg-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 2"><img src="images/gallery-1.jpg" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 3"><img src="images/gallery-1.jpg" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 4"><img src="images/gallery-1.jpg" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 5"><img src="images/gallery-1.jpg" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 6"><img src="images/gallery-1.jpg" alt="" loading="lazy" /></button>
+          <button class="mg-thumb" type="button" aria-label="Фото 7"><img src="images/gallery-1.jpg" alt="" loading="lazy" /></button>
+        </div>
       </div>
     </div>
   </section>
@@ -920,6 +967,47 @@
     { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
   );
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  // Медиа-галерея / слайдер (главное фото + миниатюры)
+  document.querySelectorAll("[data-mediagal]").forEach((gal) => {
+    const slides = [...gal.querySelectorAll(".mg-slide")];
+    const thumbs = [...gal.querySelectorAll(".mg-thumb")];
+    const cur = gal.querySelector(".mg-cur");
+    if (slides.length < 2 && thumbs.length < 2) { /* still init single */ }
+    let idx = Math.max(0, slides.findIndex((s) => s.classList.contains("is-active")));
+
+    const show = (i) => {
+      idx = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => {
+        const on = n === idx;
+        s.classList.toggle("is-active", on);
+        const v = s.querySelector("video");
+        if (v) { on ? v.play().catch(() => {}) : v.pause(); }
+      });
+      thumbs.forEach((t, n) => t.classList.toggle("is-active", n === idx));
+      if (cur) cur.textContent = idx + 1;
+      thumbs[idx] && thumbs[idx].scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+    };
+
+    thumbs.forEach((t, n) => t.addEventListener("click", () => show(n)));
+    const prev = gal.querySelector(".mg-prev");
+    const next = gal.querySelector(".mg-next");
+    prev && prev.addEventListener("click", () => show(idx - 1));
+    next && next.addEventListener("click", () => show(idx + 1));
+
+    // Свайп
+    const stage = gal.querySelector(".mediagal-stage");
+    let x0 = null;
+    stage.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener("touchend", (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
+      x0 = null;
+    });
+
+    show(idx);
+  });
 </script>
 </body>
 </html>
