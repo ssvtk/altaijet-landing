@@ -346,9 +346,10 @@
   .mg-prev { left: 8px; } .mg-next { right: 8px; }
   .mg-count { position: absolute; right: 14px; bottom: 12px; background: rgba(10,14,11,0.6); color: #fff; font-size: 0.78rem; letter-spacing: 0.03em; padding: 0.28rem 0.65rem; border-radius: 20px; z-index: 2; backdrop-filter: blur(4px); }
   .mediagal-thumbs { display: grid; grid-auto-flow: column; grid-auto-columns: 100px; gap: 0.7rem; margin-top: 0.8rem; overflow-x: auto; scrollbar-width: thin; padding-bottom: 0.3rem; scroll-snap-type: x proximity; }
-  .mg-thumb { position: relative; height: 68px; border: none; padding: 0; border-radius: 10px; overflow: hidden; cursor: pointer; opacity: 0.5; transition: opacity 0.2s var(--ease); outline: 2px solid transparent; outline-offset: 2px; background: #0a0f0c; scroll-snap-align: center; }
+  .mg-thumb { position: relative; height: 68px; border: none; padding: 0; border-radius: 10px; overflow: hidden; cursor: pointer; opacity: 0.5; transition: opacity 0.2s var(--ease); background: #0a0f0c; scroll-snap-align: center; }
   .mg-thumb img, .mg-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .mg-thumb.is-active { opacity: 1; outline-color: var(--green); }
+  .mg-thumb.is-active { opacity: 1; }
+  .mg-thumb.is-active::after { content: ""; position: absolute; inset: 0; border: 2px solid var(--green); border-radius: 10px; pointer-events: none; }
   .mg-thumb:hover { opacity: 0.85; }
   .mg-play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; pointer-events: none; }
   .mg-play svg { width: 22px; height: 22px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7)); }
