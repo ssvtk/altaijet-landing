@@ -1005,7 +1005,7 @@
     if (slides.length < 2 && thumbs.length < 2) { /* still init single */ }
     let idx = Math.max(0, slides.findIndex((s) => s.classList.contains("is-active")));
 
-    const show = (i) => {
+    const show = (i, scroll = true) => {
       idx = (i + slides.length) % slides.length;
       slides.forEach((s, n) => {
         const on = n === idx;
@@ -1015,7 +1015,7 @@
       });
       thumbs.forEach((t, n) => t.classList.toggle("is-active", n === idx));
       if (cur) cur.textContent = idx + 1;
-      thumbs[idx] && thumbs[idx].scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+      if (scroll) thumbs[idx] && thumbs[idx].scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
     };
 
     thumbs.forEach((t, n) => t.addEventListener("click", () => show(n)));
@@ -1035,7 +1035,7 @@
       x0 = null;
     });
 
-    show(idx);
+    show(idx, false);
   });
 </script>
 </body>
