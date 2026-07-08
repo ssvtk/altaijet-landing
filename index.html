@@ -1174,5 +1174,28 @@
     show(idx, false);
   });
 </script>
+<script>
+  /* Metrika goals: contact clicks (WhatsApp / Telegram / Max / phone) */
+  (function () {
+    var COUNTER = 110497682;
+    var MAP = [
+      { test: /wa\.me/i, goal: 'whatsapp' },
+      { test: /t\.me/i, goal: 'telegram' },
+      { test: /max\.ru/i, goal: 'max' },
+      { test: /^tel:/i, goal: 'phone' }
+    ];
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      for (var i = 0; i < MAP.length; i++) {
+        if (MAP[i].test.test(href)) {
+          if (typeof ym === 'function') ym(COUNTER, 'reachGoal', MAP[i].goal);
+          break;
+        }
+      }
+    }, true);
+  })();
+</script>
 </body>
 </html>
